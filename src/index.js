@@ -12,7 +12,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.videoSearch("cats");
+        this.videoSearch("");
         this.state = {
             videos: [],
             selectedVideo: null
@@ -23,16 +23,18 @@ class App extends React.Component {
     videoSearch(term) {
         YTSearch({ key: API_KEY, term: term }, videos => {
             this.setState({
-                videos,
+                videos, 
                 selectedVideo: videos[0]
             })
         });
     }
 
     render() {
+        const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
+
         return (
             <div>
-                <SearchBar onSearchTermChange={term => this.videoSearch(term)} placeholder="Seach..." />
+                <SearchBar onSearchTermChange={videoSearch} placeholder="Seach..." />
                 <VideoDetail video={this.state.selectedVideo} />
                 <VideoList
                     videos={this.state.videos}
