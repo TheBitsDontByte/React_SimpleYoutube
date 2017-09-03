@@ -9,7 +9,6 @@ const VideoList = (props) => {
             <div key={video.etag} className="video-list-item-div">
                 <VideoListItem
                     onVideoSelect={props.onVideoSelect}
-                    
                     video={video}
                 />
             </div>);
